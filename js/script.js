@@ -1,3 +1,9 @@
+// TODO: make list of places
+// TODO: iterate over knockout array to add items on left
+// TODO: add info to infowindow
+
+
+
 function initMap() {
 	var midtown = {lat: 33.7861132, lng: -84.3896419};
 
@@ -25,6 +31,12 @@ function initMap() {
 
 
 
+};
 
-
+//knockoutJS stuff
+var places = {
+	name: ko.observable('nathan'),
+	age: ko.observable(28)
 }
+
+ko.applyBindings(places);

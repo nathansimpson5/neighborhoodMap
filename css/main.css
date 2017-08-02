@@ -5,6 +5,14 @@ html, body {
 	padding: 0;
 }
 
+#infoBar {
+	width: 15%;
+	height: 100%;
+	background-color: white;
+	position: absolute;
+	z-index: 1;
+}
+
 #map {
 	height: 100%;
 	background-color: grey;
