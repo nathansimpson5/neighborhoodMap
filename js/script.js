@@ -39,4 +39,5 @@ var places = ko.observableArray([
 	{name: "snake", age: 18}
 ]);
 
+
 ko.applyBindings(places);
