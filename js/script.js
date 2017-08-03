@@ -13,7 +13,7 @@ function initMap() {
 	  center: midtown
 	});
 
-	// Create market for midtown
+	// Create marker for midtown
 	var marker = new google.maps.Marker({
 	  position: midtown,
 	  map: map
@@ -34,9 +34,9 @@ function initMap() {
 };
 
 //knockoutJS stuff
-var places = {
-	name: ko.observable('nathan'),
-	age: ko.observable(28)
-}
+var places = ko.observableArray([
+	{name: "Nathan", age: 28},
+	{name: "snake", age: 18}
+]);
 
 ko.applyBindings(places);
