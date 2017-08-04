@@ -1,10 +1,10 @@
-// TODO: iterate over knockout array to add items on left
 // TODO: add info to infowindow
 // TODO: add filter
 
 var map;
 
-var markers = [];
+// set up ko array for interacting with html
+var markers = ko.observableArray();
 
 
 function initMap() {
@@ -68,5 +68,5 @@ function populateInfoWindow(marker, infowindow) {
 };
 
 
-/*
-ko.applyBindings(places);*/
+//bind markers to html
+ko.applyBindings(markers);
