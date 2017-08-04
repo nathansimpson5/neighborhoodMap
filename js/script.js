@@ -1,5 +1,6 @@
 // TODO: iterate over knockout array to add items on left
 // TODO: add info to infowindow
+// TODO: add filter
 
 var map;
 
@@ -16,11 +17,11 @@ function initMap() {
 
 	// make list of places
 	var places = [
-		{name: "Arts Center Station", location: {lat: 33.789304, lng: -84.3891965}},
-		{name: "DaVinci's Pizza", location: {lat: 33.788992, lng: -84.3886788}},
-		{name: "Foxtrot", location: {lat: 33.7857445, lng: -84.38633}},
-		{name: "Eleventh Street Pub", location: {lat: 33.7837559, lng: -84.3866712}},
-		{name: "Dancing Goats", location: {lat: 33.7811075, lng: -84.3867295}},
+		{name: "Arts Center Station", location: {lat: 33.789304, lng: -84.3891965}, type: "metro"},
+		{name: "DaVinci's Pizza", location: {lat: 33.788992, lng: -84.3886788}, type: "pizza"},
+		{name: "Foxtrot", location: {lat: 33.7857445, lng: -84.38633}, type: "cocktails/snacks"},
+		{name: "Eleventh Street Pub", location: {lat: 33.7837559, lng: -84.3866712}, type: "dive bar"},
+		{name: "Dancing Goats", location: {lat: 33.7811075, lng: -84.3867295}, type: "coffee"},
 ];
 
 	var largeInfoWindow = new google.maps.InfoWindow();
@@ -29,33 +30,31 @@ function initMap() {
 	for (var i=0; i < places.length; i++){
 		var position = places[i].location;
 		var title = places[i].name;
+		var type = places[i].type;
 
 		var marker = new google.maps.Marker({
 			map: map,
 			position: position,
 			title: title,
 			animation: google.maps.Animation.DROP,
-			id: 1
+			id: i,
+			type: type
 		});
 
 		markers.push(marker);
 
-		//add click even for infowindow
+		//add click event for infowindow
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfoWindow);
 		})
 
-		// add infowindow
-		var infowindow = new google.maps.InfoWindow({
-			content: title
-		});
 	}
 
 // function to add content to infowindow
 function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
-		infowindow.setContent('<div>' + marker.title + '</div>');
+		infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div>');
 		infowindow.open(map, marker);
 
 		infowindow.addListener('closeclick', function(){
