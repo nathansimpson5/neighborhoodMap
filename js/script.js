@@ -65,6 +65,13 @@ function initMap() {
 
 	}
 
+	var placeSearchBox = document.getElementById('placeSearchBox');
+	var options = {
+		types: ['establishment']
+	};
+
+	autocomplete = new google.maps.places.Autocomplete(placeSearchBox, options);
+
 // function to add content to infowindow
 function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker != marker) {
