@@ -1,6 +1,7 @@
 // TODO: add info to infowindow
 // TODO: add filter
 
+
 var map;
 
 // set up ko array for interacting with html

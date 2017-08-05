@@ -17,3 +17,12 @@ html, body {
 	height: 100%;
 	background-color: grey;
 }
+
+#placeSearchBox {
+	width: 80%;
+	margin: 10px;
+}
+
+#placeSearchButton {
+	margin-left: 70px;
+}

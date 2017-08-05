@@ -8,6 +8,10 @@
   <body>
   	<div id="infoBar">
   		<h2>Places of interest</h2>
+      <input type="text" placeholder="search for a place" id="placeSearchBox">
+      <input type="button" name="" value="Search" id="placeSearchButton">
+<hr>
+
   		<ul data-bind="foreach: markers">
   			<li data-bind="text: title"></li>
   		</ul>
