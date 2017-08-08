@@ -112,6 +112,9 @@ function initMap() {
 	var defaultIcon = makeMarkerIcon('c6e2ff');
 	var selectedIcon = makeMarkerIcon('ffff66');
 
+    //bounds handler
+    var bounds = new google.maps.LatLngBounds();
+
 	// iterate over list and make marker for each place
 	for (var i=0; i < places.length; i++){
 		var position = places[i].location;
@@ -126,6 +129,8 @@ function initMap() {
 			id: i,
 			type: type
 		});
+        //extend the bounds for each marker
+        bounds.extend(position);
 
 		markers.push(marker);
 
@@ -145,6 +150,8 @@ function initMap() {
 		});
 
 	}
+    //fit the map to the bounds
+    map.fitBounds(bounds);
 
 	var placeSearchBox = document.getElementById('placeSearchBox');
 	var options = {
