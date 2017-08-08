@@ -137,6 +137,7 @@ function initMap() {
 		//add click event for infowindow
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfoWindow);
+			dropPin(this);
 		});
 
 		// make marker change color on mouseover
@@ -183,6 +184,15 @@ function makeMarkerIcon(markerColor) {
 	  new google.maps.Point(10, 34),
 	  new google.maps.Size(21,34));
 	return markerImage;
+}
+
+// function to drop a pin from heaven
+function dropPin(marker) {
+	if (marker.getAnimation() !== null) {
+		marker.setAnimation(null);
+	} else {
+		marker.setAnimation(google.maps.Animation.DROP);
+	}
 }
 
 
