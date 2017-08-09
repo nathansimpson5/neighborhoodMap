@@ -200,5 +200,7 @@ function dropPin(marker) {
 };
 
 
+
+
 //bind markers to html
 ko.applyBindings(markers);
