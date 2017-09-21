@@ -80,7 +80,16 @@ var styles = [
             }
         ]
     }
-]
+];
+
+// make list of places
+var places = [
+    {name: "Arts Center Station", location: {lat: 33.789304, lng: -84.3891965}, type: "metro"},
+    {name: "DaVinci's Pizza", location: {lat: 33.788992, lng: -84.3886788}, type: "pizza"},
+    {name: "Foxtrot", location: {lat: 33.7857445, lng: -84.38633}, type: "cocktails/snacks"},
+    {name: "Eleventh Street Pub", location: {lat: 33.7837559, lng: -84.3866712}, type: "dive bar"},
+    {name: "Dancing Goats", location: {lat: 33.7811075, lng: -84.3867295}, type: "coffee"},
+];
 
 var map;
 
@@ -96,15 +105,10 @@ function initMap() {
 	  center: {lat: 33.7861132, lng: -84.3896419},
 	  styles: styles
 	});
+    ko.applyBindings(ViewModel);
+}
 
-	// make list of places
-	var places = [
-		{name: "Arts Center Station", location: {lat: 33.789304, lng: -84.3891965}, type: "metro"},
-		{name: "DaVinci's Pizza", location: {lat: 33.788992, lng: -84.3886788}, type: "pizza"},
-		{name: "Foxtrot", location: {lat: 33.7857445, lng: -84.38633}, type: "cocktails/snacks"},
-		{name: "Eleventh Street Pub", location: {lat: 33.7837559, lng: -84.3866712}, type: "dive bar"},
-		{name: "Dancing Goats", location: {lat: 33.7811075, lng: -84.3867295}, type: "coffee"},
-];
+function ViewModel() {
 
 	var largeInfoWindow = new google.maps.InfoWindow();
 
@@ -199,6 +203,3 @@ function dropPin(marker) {
 
 };
 
-
-//bind markers to html
-ko.applyBindings(markers);
