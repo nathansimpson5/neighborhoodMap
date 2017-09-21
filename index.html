@@ -16,12 +16,14 @@
   			<li data-bind="text: title"></li>
   		</ul>
   	</div>
-    <div id="map"></div>
+    <div id="map">
+          <div id="error"></div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3vLBfiKmhumNDkwm7L-_pXA7Cc83cL9w&&libraries=places&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3vLBfiKmhumNDkwm7L-_pXA7Cc83cL9w&&libraries=places&callback=initMap" onerror="mapError()">
     </script>
   </body>
 </html>

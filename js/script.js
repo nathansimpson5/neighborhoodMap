@@ -108,6 +108,10 @@ function initMap() {
     ko.applyBindings(ViewModel);
 }
 
+function mapError() {
+    document.getElementById('error').innerHTML = "<h1> ERROR LOADING PAGE! do you even have internet? Check, then reload.</h1>";
+}
+
 function ViewModel() {
 
 	var largeInfoWindow = new google.maps.InfoWindow();
