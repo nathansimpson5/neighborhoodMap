@@ -105,14 +105,15 @@ function initMap() {
 	  center: {lat: 33.7861132, lng: -84.3896419},
 	  styles: styles
 	});
-    ko.applyBindings(ViewModel);
+    ko.applyBindings(new ViewModel());
 }
 
 function mapError() {
     document.getElementById('error').innerHTML = "<h1> ERROR LOADING PAGE! do you even have internet? Check, then reload.</h1>";
 }
 
-function ViewModel() {
+var ViewModel = function() {
+    var self = this;
 
 	var largeInfoWindow = new google.maps.InfoWindow();
 
@@ -135,14 +136,15 @@ function ViewModel() {
 			title: title,
 			animation: google.maps.Animation.DROP,
 			id: i,
-			type: type
+			type: type,
+            opacity: 0.5
 		});
         //extend the bounds for each marker
         bounds.extend(position);
 
 		markers.push(marker);
 
-		//add click event for infowindow
+		//add click event for marker
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfoWindow);
 			dropPin(this);
@@ -150,12 +152,12 @@ function ViewModel() {
 
 		// make marker change color on mouseover
 		marker.addListener('mouseover', function() {
-			this.setIcon(selectedIcon);
+			this.setOpacity(1.0);
 		});
 
 		// make marker go back to normal on mouse out
 		marker.addListener('mouseout', function() {
-			this.setIcon(defaultIcon);
+			this.setOpacity(0.5);
 		});
 
 	}
