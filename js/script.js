@@ -115,6 +115,8 @@ function mapError() {
 var ViewModel = function() {
     var self = this;
 
+    self.searchBoxInput = ko.observable("");
+
 	var largeInfoWindow = new google.maps.InfoWindow();
 
 	// set custom colors for icons
@@ -147,7 +149,7 @@ var ViewModel = function() {
 		//add click event for marker
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfoWindow);
-			dropPin(this);
+			bouncePin(this);
 		});
 
 		// make marker change color on mouseover
@@ -197,11 +199,12 @@ function makeMarkerIcon(markerColor) {
 }
 
 // function to drop a pin from heaven
-function dropPin(marker) {
+function bouncePin(marker) {
 	if (marker.getAnimation() !== null) {
 		marker.setAnimation(null);
 	} else {
-		marker.setAnimation(google.maps.Animation.DROP);
+		marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){marker.setAnimation(null); }, 750);
 	}
 }
 
