@@ -125,15 +125,11 @@ var ViewModel = function() {
 
 	var largeInfoWindow = new google.maps.InfoWindow();
 
-	// set custom colors for icons
-	var defaultIcon = makeMarkerIcon('c6e2ff');
-	var selectedIcon = makeMarkerIcon('ffff66');
-
     //bounds handler
     var bounds = new google.maps.LatLngBounds();
 
 	// iterate over list and make marker for each place
-	for (var i=0; i < places.length; i++){
+	for (let i=0; i < places.length; i++){
 		var position = places[i].location;
 		var title = places[i].name;
 		var type = places[i].type;
@@ -152,24 +148,15 @@ var ViewModel = function() {
 
 		markers.push(marker);
 
-	//add click event for marker
-	marker.addListener('click', function() {
-		populateInfoWindow(this, largeInfoWindow);
-		bouncePin(this);
-	});
+    //add click event for marker
+    marker.addListener('click', clickMarker);
 
 	// make marker change color on mouseover
-	marker.addListener('mouseover', function() {
-		this.setOpacity(1.0);
-	});
+	marker.addListener('mouseover', mouseOverMarker);
 
 	// make marker go back to normal on mouse out
-	marker.addListener('mouseout', function() {
-		this.setOpacity(0.5);
-	});
-
+	marker.addListener('mouseout', mouseOutMarker);
 	}
-
 
     //fit the map to the bounds
     map.fitBounds(bounds);
@@ -195,17 +182,6 @@ function populateInfoWindow(marker, infowindow) {
 	}
 }
 
-//change marker color
-function makeMarkerIcon(markerColor) {
-	var markerImage = new google.maps.MarkerImage(
-	  'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
-	  '|40|_|%E2%80%A2',
-	  new google.maps.Size(21, 34),
-	  new google.maps.Point(0, 0),
-	  new google.maps.Point(10, 34),
-	  new google.maps.Size(21,34));
-	return markerImage;
-}
 
 // function to drop a pin from heaven
 function bouncePin(marker) {
@@ -216,6 +192,22 @@ function bouncePin(marker) {
         setTimeout(function(){marker.setAnimation(null); }, 750);
 	}
 }
+
+
+function clickMarker() {
+    populateInfoWindow(this,largeInfoWindow);
+    bouncePin(this);
+}
+
+function mouseOverMarker() {
+    this.setOpacity(1.0);
+}
+
+function mouseOutMarker() {
+    this.setOpacity(0.5);
+}
+
+
 
 
 
