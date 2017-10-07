@@ -152,21 +152,21 @@ var ViewModel = function() {
 
 		markers.push(marker);
 
-		//add click event for marker
-		marker.addListener('click', function() {
-			populateInfoWindow(this, largeInfoWindow);
-			bouncePin(this);
-		});
+	//add click event for marker
+	marker.addListener('click', function() {
+		populateInfoWindow(this, largeInfoWindow);
+		bouncePin(this);
+	});
 
-		// make marker change color on mouseover
-		marker.addListener('mouseover', function() {
-			this.setOpacity(1.0);
-		});
+	// make marker change color on mouseover
+	marker.addListener('mouseover', function() {
+		this.setOpacity(1.0);
+	});
 
-		// make marker go back to normal on mouse out
-		marker.addListener('mouseout', function() {
-			this.setOpacity(0.5);
-		});
+	// make marker go back to normal on mouse out
+	marker.addListener('mouseout', function() {
+		this.setOpacity(0.5);
+	});
 
 	}
 
