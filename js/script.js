@@ -86,9 +86,15 @@ var styles = [
 var places = [
     {name: "Arts Center Station", location: {lat: 33.789304, lng: -84.3891965}, type: "metro"},
     {name: "DaVinci's Pizza", location: {lat: 33.788992, lng: -84.3886788}, type: "pizza"},
+    {name: "Octane", location: {lat:33.7794023, lng: -84.4124513}, type: "coffee"},
     {name: "Foxtrot", location: {lat: 33.7857445, lng: -84.38633}, type: "cocktails/snacks"},
     {name: "Eleventh Street Pub", location: {lat: 33.7837559, lng: -84.3866712}, type: "dive bar"},
     {name: "Dancing Goats", location: {lat: 33.7811075, lng: -84.3867295}, type: "coffee"},
+    {name: "Antico", location: {lat: 33.784625, lng: -84.405546}, type: "pizza"},
+    {name: "Park Tavern", location: {lat:33.7822412, lng: -84.3713962}, type: "bar"},
+    {name: "8ARM", location: {lat:33.773748, lng: -84.3661327}, type: "coffee"},
+    {name: "Delia's Chicken Sausage Stand", location: {lat:33.7764379, lng: -84.4094803}, type: "food"}
+
 ];
 
 var map;
@@ -163,12 +169,15 @@ var ViewModel = function() {
 		});
 
 	}
+
+
     //fit the map to the bounds
     map.fitBounds(bounds);
 
 	var placeSearchBox = document.getElementById('placeSearchBox');
 	var options = {
-		types: ['establishment']
+		types: ['establishment'],
+        bounds: bounds
 	};
 
 	autocomplete = new google.maps.places.Autocomplete(placeSearchBox, options);
