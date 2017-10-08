@@ -121,7 +121,12 @@ function mapError() {
 var ViewModel = function() {
     var self = this;
 
+    //get user input in the search box
     self.searchBoxInput = ko.observable("");
+    self.filteredList = ko.computed(function() {
+
+        console.log(self.searchBoxInput());
+    });
 
 	var largeInfoWindow = new google.maps.InfoWindow();
 
@@ -207,8 +212,10 @@ function mouseOutMarker() {
     this.setOpacity(0.5);
 }
 
-
-
+/*$('#placeSearchBox').on('input', function() {
+    var userInput = $(this).val();
+    console.log(userInput);
+})*/
 
 
 };
