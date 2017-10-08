@@ -101,6 +101,7 @@ var map;
 
 // set up ko array for interacting with html
 var markers = ko.observableArray();
+var filteredOutput = ko.observableArray([]);
 
 
 function initMap() {
@@ -124,8 +125,18 @@ var ViewModel = function() {
     //get user input in the search box
     self.searchBoxInput = ko.observable("");
     self.filteredList = ko.computed(function() {
-
-        console.log(self.searchBoxInput());
+        var filter = self.searchBoxInput().toLowerCase();
+        if (!filter){
+            return places
+        } else {
+            var listy = [];
+            places.forEach(function(placeItem){
+                if (placeItem.name.indexOf(self.searchBoxInput().toLowerCase()) !== -1){
+                    listy.push(placeItem);
+                }
+            })
+            return listy
+        }
     });
 
 	var largeInfoWindow = new google.maps.InfoWindow();
@@ -166,13 +177,13 @@ var ViewModel = function() {
     //fit the map to the bounds
     map.fitBounds(bounds);
 
-	var placeSearchBox = document.getElementById('placeSearchBox');
+/*	var placeSearchBox = document.getElementById('placeSearchBox');
 	var options = {
 		types: ['establishment'],
         bounds: bounds
 	};
 
-	autocomplete = new google.maps.places.Autocomplete(placeSearchBox, options);
+	autocomplete = new google.maps.places.Autocomplete(placeSearchBox, options);*/
 
 // function to add content to infowindow
 function populateInfoWindow(marker, infowindow) {
@@ -211,6 +222,8 @@ function mouseOverMarker() {
 function mouseOutMarker() {
     this.setOpacity(0.5);
 }
+
+
 
 /*$('#placeSearchBox').on('input', function() {
     var userInput = $(this).val();

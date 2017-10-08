@@ -12,8 +12,8 @@
       <input type="button" name="" value="Search" id="placeSearchButton">
 <hr>
 
-  		<ul data-bind="foreach: markers">
-  			<li data-bind="text: title"></li>
+  		<ul data-bind="foreach: filteredList">
+  			<li data-bind="text: name"></li>
   		</ul>
   	</div>
     <div id="map">
