@@ -1,6 +1,7 @@
 // TODO: add info to infowindow
 // TODO: add filter
 
+
 var styles = [
     {
         "featureType": "administrative",
@@ -127,15 +128,15 @@ var ViewModel = function() {
     self.filteredList = ko.computed(function() {
         var filter = self.searchBoxInput().toLowerCase();
         if (!filter){
-            return places
+            return places;
         } else {
             var listy = [];
             places.forEach(function(placeItem){
-                if (placeItem.name.indexOf(self.searchBoxInput().toLowerCase()) !== -1){
+                if (placeItem.name.toLowerCase().indexOf(self.searchBoxInput()) !== -1){
                     listy.push(placeItem);
                 }
-            })
-            return listy
+            });
+            return listy;
         }
     });
 
@@ -198,6 +199,31 @@ function populateInfoWindow(marker, infowindow) {
 	}
 }
 
+//foursquare API authentication
+const foursquareClientId = "JR52CKCFQ4ZOI1OHAHBMW5JHWFXJFXA0CUBO0ZFTYN11YGHV";
+const foursquareClientSecret = "NAA0XP2JH2CMHWAUUTRZWKVUEYSVKCXW2PMFCAC0L5DDXHGG";
+const foursquareVenueId = "4a7d9df3f964a520f3ee1fe3";
+
+//foursquare venue search call
+$.ajax({
+    url: "https://api.foursquare.com/v2/venues/"+foursquareVenueId + '/tips?',
+    method: 'GET',
+    dataType: "json",
+    data: {
+        client_id: foursquareClientId,
+        client_secret: foursquareClientSecret,
+        v: "20170801",
+        venue_id: foursquareVenueId,
+        limit: 5,
+        sort: 'popular'        
+    },
+    success: function(stuff) {
+        var result = stuff.response.tips.items[0].text;
+        console.log (result);
+    }
+});
+
+
 
 // function to drop a pin from heaven
 function bouncePin(marker) {
@@ -223,12 +249,6 @@ function mouseOutMarker() {
     this.setOpacity(0.5);
 }
 
-
-
-/*$('#placeSearchBox').on('input', function() {
-    var userInput = $(this).val();
-    console.log(userInput);
-})*/
 
 
 };
