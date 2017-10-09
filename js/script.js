@@ -140,7 +140,7 @@ var ViewModel = function() {
         }
     });
 
-	var largeInfoWindow = new google.maps.InfoWindow({
+	var infoWindow = new google.maps.InfoWindow({
         maxWidth: 200,
     });
 
@@ -209,7 +209,7 @@ const foursquareVenueId = "4a7d9df3f964a520f3ee1fe3";
 var tip;
 //foursquare venue search call
 $.ajax({
-    url: "https://api.foursquare.com/v2/venues/"+foursquareVenueId + '/tips?',
+    url: "https://api.foursquare.com/v2/venues/"+ foursquareVenueId + '/tips?',
     method: 'GET',
     dataType: "json",
     data: {
@@ -242,9 +242,9 @@ function bouncePin(marker) {
 
 
 function clickMarker() {
-    populateInfoWindow(this,largeInfoWindow);
+    populateInfoWindow(this,infoWindow);
     bouncePin(this);
-    map.setCenter(marker.getPosition());
+    map.setCenter(this.getPosition());
 }
 
 function mouseOverMarker() {
