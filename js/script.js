@@ -140,7 +140,9 @@ var ViewModel = function() {
         }
     });
 
-	var largeInfoWindow = new google.maps.InfoWindow();
+	var largeInfoWindow = new google.maps.InfoWindow({
+        maxWidth: 200,
+    });
 
     //bounds handler
     var bounds = new google.maps.LatLngBounds();
@@ -190,7 +192,7 @@ var ViewModel = function() {
 function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
-		infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div>');
+		infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div><hr><div>'+tip+'</div>');
 		infowindow.open(map, marker);
 
 		infowindow.addListener('closeclick', function(){
@@ -204,6 +206,7 @@ const foursquareClientId = "JR52CKCFQ4ZOI1OHAHBMW5JHWFXJFXA0CUBO0ZFTYN11YGHV";
 const foursquareClientSecret = "NAA0XP2JH2CMHWAUUTRZWKVUEYSVKCXW2PMFCAC0L5DDXHGG";
 const foursquareVenueId = "4a7d9df3f964a520f3ee1fe3";
 
+var tip;
 //foursquare venue search call
 $.ajax({
     url: "https://api.foursquare.com/v2/venues/"+foursquareVenueId + '/tips?',
@@ -220,6 +223,8 @@ $.ajax({
     success: function(stuff) {
         var result = stuff.response.tips.items[0].text;
         console.log (result);
+        tip = result;
+        return result;
     }
 });
 
@@ -239,6 +244,7 @@ function bouncePin(marker) {
 function clickMarker() {
     populateInfoWindow(this,largeInfoWindow);
     bouncePin(this);
+    map.setCenter(marker.getPosition());
 }
 
 function mouseOverMarker() {
