@@ -1,7 +1,3 @@
-// TODO: add info to infowindow
-// TODO: add filter
-
-
 var styles = [
     {
         "featureType": "administrative",
@@ -85,16 +81,14 @@ var styles = [
 
 // make list of places
 var places = [
-    {name: "Arts Center Station", location: {lat: 33.789304, lng: -84.3891965}, type: "metro"},
-    {name: "DaVinci's Pizza", location: {lat: 33.788992, lng: -84.3886788}, type: "pizza"},
-    {name: "Octane", location: {lat:33.7794023, lng: -84.4124513}, type: "coffee"},
-    {name: "Foxtrot", location: {lat: 33.7857445, lng: -84.38633}, type: "cocktails/snacks"},
-    {name: "Eleventh Street Pub", location: {lat: 33.7837559, lng: -84.3866712}, type: "dive bar"},
-    {name: "Dancing Goats", location: {lat: 33.7811075, lng: -84.3867295}, type: "coffee"},
-    {name: "Antico", location: {lat: 33.784625, lng: -84.405546}, type: "pizza"},
-    {name: "Park Tavern", location: {lat:33.7822412, lng: -84.3713962}, type: "bar"},
-    {name: "8ARM", location: {lat:33.773748, lng: -84.3661327}, type: "coffee"},
-    {name: "Delia's Chicken Sausage Stand", location: {lat:33.7764379, lng: -84.4094803}, type: "food"}
+    {name: "Arts Center Station", location: {lat: 33.789382369669426, lng: -84.38720934744636}, type: "metro", id: "49e8940ef964a52054651fe3"},
+    {name: "Octane", location: {lat:33.77932568445548, lng: -84.41016912460327}, type: "coffee", id: "4144e300f964a520ad1c1fe3"},
+    {name: "Foxtrot", location: {lat: 33.78556045322771, lng: -84.38606100383434}, type: "cocktails/snacks", id: "57f85f7e498e8ced1a49efc6"},
+    {name: "Dancing Goats", location: {lat: 33.78082391296792, lng: -84.38665351188497}, type: "coffee", id: "588e77fc5e7896466a8dc683"},
+    {name: "Antico", location: {lat: 33.784642447338825, lng: -84.40579907362273}, type: "pizza", id: "4ac29836f964a520e79920e3"},
+    {name: "Park Tavern", location: {lat:33.78232196216649, lng: -84.36946392059326}, type: "bar", id: "40e0b100f964a52023071fe3"},
+    {name: "8ARM", location: {lat:33.77387236840846, lng: -84.36405926942825}, type: "coffee", id: "57b8cfa7498efd6377057e33"},
+    {name: "Delia's Chicken Sausage Stand", location: {lat:33.77640638325673, lng: -84.4074081625613}, type: "food", id: "53b4302f498eccff0c78b9ab"}
 
 ];
 
@@ -152,13 +146,14 @@ var ViewModel = function() {
 		var position = places[i].location;
 		var title = places[i].name;
 		var type = places[i].type;
+        var id = places[i].id;
 
 		var marker = new google.maps.Marker({
 			map: map,
 			position: position,
 			title: title,
 			animation: google.maps.Animation.DROP,
-			id: i,
+			id: id,
 			type: type,
             opacity: 0.5
 		});
@@ -187,47 +182,51 @@ var ViewModel = function() {
 	};
 
 	autocomplete = new google.maps.places.Autocomplete(placeSearchBox, options);*/
+var tip;
+var result;
 
 // function to add content to infowindow
 function populateInfoWindow(marker, infowindow) {
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
-		infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div><hr><div>'+tip+'</div>');
+
+        //foursquare API authentication
+        var foursquareClientId = "JR52CKCFQ4ZOI1OHAHBMW5JHWFXJFXA0CUBO0ZFTYN11YGHV";
+        var foursquareClientSecret = "NAA0XP2JH2CMHWAUUTRZWKVUEYSVKCXW2PMFCAC0L5DDXHGG";
+        var foursquareVenueId = marker.id;
+
+
+        //foursquare venue search call
+        $.ajax({
+            url: "https://api.foursquare.com/v2/venues/"+ foursquareVenueId + '/tips?',
+            method: 'GET',
+            async: false,
+            dataType: "json",
+            data: {
+                client_id: foursquareClientId,
+                client_secret: foursquareClientSecret,
+                v: "20170801",
+                venue_id: foursquareVenueId,
+                limit: 5,
+                sort: 'popular'        
+            },
+            success: function(stuff) {
+                result = stuff.response.tips.items[0].text;
+            }
+        });
+
+
+		infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div><hr><div>'+result+'</div>');
 		infowindow.open(map, marker);
 
 		infowindow.addListener('closeclick', function(){
 			infowindow.setMarker = null;
 		});
+
+
+
 	}
 }
-
-//foursquare API authentication
-const foursquareClientId = "JR52CKCFQ4ZOI1OHAHBMW5JHWFXJFXA0CUBO0ZFTYN11YGHV";
-const foursquareClientSecret = "NAA0XP2JH2CMHWAUUTRZWKVUEYSVKCXW2PMFCAC0L5DDXHGG";
-const foursquareVenueId = "4a7d9df3f964a520f3ee1fe3";
-
-var tip;
-//foursquare venue search call
-$.ajax({
-    url: "https://api.foursquare.com/v2/venues/"+ foursquareVenueId + '/tips?',
-    method: 'GET',
-    dataType: "json",
-    data: {
-        client_id: foursquareClientId,
-        client_secret: foursquareClientSecret,
-        v: "20170801",
-        venue_id: foursquareVenueId,
-        limit: 5,
-        sort: 'popular'        
-    },
-    success: function(stuff) {
-        var result = stuff.response.tips.items[0].text;
-        console.log (result);
-        tip = result;
-        return result;
-    }
-});
-
 
 
 // function to drop a pin from heaven
