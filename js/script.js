@@ -96,7 +96,6 @@ var map;
 
 // set up ko array for interacting with html
 var markers = ko.observableArray();
-var filteredOutput = ko.observableArray([]);
 
 
 function initMap() {
@@ -175,14 +174,6 @@ var ViewModel = function() {
     //fit the map to the bounds
     map.fitBounds(bounds);
 
-/*	var placeSearchBox = document.getElementById('placeSearchBox');
-	var options = {
-		types: ['establishment'],
-        bounds: bounds
-	};
-
-	autocomplete = new google.maps.places.Autocomplete(placeSearchBox, options);*/
-var tip;
 var result;
 
 // function to add content to infowindow
