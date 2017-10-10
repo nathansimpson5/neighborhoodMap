@@ -200,7 +200,7 @@ function populateInfoWindow(marker, infowindow) {
         $.ajax({
             url: "https://api.foursquare.com/v2/venues/"+ foursquareVenueId + '/tips?',
             method: 'GET',
-            async: false,
+            async: true,
             dataType: "json",
             data: {
                 client_id: foursquareClientId,
@@ -212,16 +212,19 @@ function populateInfoWindow(marker, infowindow) {
             },
             success: function(stuff) {
                 result = stuff.response.tips.items[0].text;
+                infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div><hr><div>'+result+'</div>');
+
+                infowindow.open(map, marker);
+                infowindow.addListener('closeclick', function(){
+                    infowindow.setMarker = null;
+                });
+            },
+            error: function(err){
+                infowindow.setContent('<div>Foursquare data is unavailable. Please try refreshing.</div>');
+
+                infowindow.open(map,marker);
             }
         });
-
-
-		infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div><hr><div>'+result+'</div>');
-		infowindow.open(map, marker);
-
-		infowindow.addListener('closeclick', function(){
-			infowindow.setMarker = null;
-		});
 
 
 

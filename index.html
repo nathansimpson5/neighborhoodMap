@@ -13,7 +13,7 @@
 <hr>
 
   		<ul data-bind="foreach: filteredList">
-  			<li data-bind="text: name"></li>
+  			<li data-bind="text: name, click: $parent.clickMarker"></li>
   		</ul>
   	</div>
     <div id="map">
