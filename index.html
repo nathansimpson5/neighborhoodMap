@@ -4,13 +4,14 @@
   <title>Udacity Neighborhood Map</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
   	<div id="infoBar">
   		<h2>Places of interest</h2>
       <input type="text" placeholder="search for a place" id="placeSearchBox" data-bind="textInput: searchBoxInput">
       <input type="button" name="" value="Search" id="placeSearchButton">
-<hr>
+      <hr>
 
   		<ul data-bind="foreach: filteredList">
   			<li data-bind="text: name"></li>
