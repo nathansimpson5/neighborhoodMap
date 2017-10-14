@@ -241,6 +241,9 @@ var ViewModel = function() {
         populateInfoWindow(this,infoWindow);
         bouncePin(this);
         map.setCenter(this.getPosition());
+        if ($("#hamInfo").is(":visible")) {
+            $("#hamInfo").toggle();
+        }
     }
 
     function mouseOverMarker() {
@@ -269,3 +272,7 @@ var ViewModel = function() {
 
 
 };
+
+$("#ham").click(function() {
+    $("#hamInfo").toggle();
+});

@@ -32,3 +32,27 @@ html, body {
 	padding-top: 300px;
 	padding-left: 15%;
 }
+
+@media screen and (max-width: 720px) {
+	#infoBar {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 721px) {
+	#ham {
+		display: none;
+	}
+}
+
+#hamInfo {
+	width: 100%;
+	height: 40%;
+	background-color: white;
+	position: absolute;
+	z-index: 1;
+}
+
+#hamInfoTitle {
+	text-align: center;
+}

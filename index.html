@@ -7,6 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
+    <div id="ham">
+      &#9776; Menu
+    </div>
+
+      <div id="hamInfo">
+        <h2 id="hamInfoTitle">Places of interest</h2>
+        <input type="text" placeholder="search for a place" id="placeSearchBox" data-bind="textInput: searchBoxInput">
+        <hr>
+
+        <ul data-bind="foreach: filteredList">
+          <li data-bind="text: title, click: $parent.clickList"></li>
+        </ul>
+      </div>
+    
+
   	<div id="infoBar">
   		<h2 id="infoBarTitle">Places of interest</h2>
       <input type="text" placeholder="search for a place" id="placeSearchBox" data-bind="textInput: searchBoxInput">
