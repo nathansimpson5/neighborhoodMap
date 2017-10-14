@@ -43,6 +43,9 @@ html, body {
 	#ham {
 		display: none;
 	}
+	#hamInfo {
+		display: none;
+	}
 }
 
 #hamInfo {
