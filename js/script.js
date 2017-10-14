@@ -100,17 +100,17 @@ var markers = ko.observableArray();
 
 function initMap() {
 
-	// make map and center it on Atlantic House
-	map = new google.maps.Map(document.getElementById('map'), {
-	  zoom: 15,
-	  center: {lat: 33.7861132, lng: -84.3896419},
-	  styles: styles
-	});
+    // make map and center it on Atlantic House
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 15,
+      center: {lat: 33.7861132, lng: -84.3896419},
+      styles: styles
+    });
     ko.applyBindings(new ViewModel());
 }
 
 function mapError() {
-    document.getElementById('error').innerHTML = "<h1> ERROR LOADING PAGE! do you even have internet? Check, then reload.</h1>";
+    document.getElementById("error").innerHTML = "<h1> ERROR LOADING PAGE! do you even have internet? Check, then reload.</h1>";
 }
 
 var ViewModel = function() {
@@ -136,137 +136,136 @@ var ViewModel = function() {
         }
     });
 
-	var infoWindow = new google.maps.InfoWindow({
-        maxWidth: 200,
+    var infoWindow = new google.maps.InfoWindow({
+        maxWidth: 200
     });
 
     //bounds handler
     var bounds = new google.maps.LatLngBounds();
 
-	// iterate over list and make marker for each place
-	for (let i=0; i < places.length; i++){
-		var position = places[i].location;
-		var title = places[i].name;
-		var type = places[i].type;
+    // iterate over list and make marker for each place
+    for (let i=0; i < places.length; i++){
+        var position = places[i].location;
+        var title = places[i].name;
+        var type = places[i].type;
         var id = places[i].id;
 
-		var marker = new google.maps.Marker({
-			map: map,
-			position: position,
-			title: title,
-			animation: google.maps.Animation.DROP,
-			id: id,
-			type: type,
+        var marker = new google.maps.Marker({
+            map: map,
+            position: position,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            id: id,
+            type: type,
             opacity: 0.5
-		});
+        });
         //extend the bounds for each marker
         bounds.extend(position);
 
-		markers.push(marker);
+        markers.push(marker);
 
-    //add click event for marker
-    marker.addListener('click', clickMarker);
+        //add click event for marker
+        marker.addListener("click", clickMarker);
 
-	// make marker change color on mouseover
-	marker.addListener('mouseover', mouseOverMarker);
+        // make marker change color on mouseover
+        marker.addListener("mouseover", mouseOverMarker);
 
-	// make marker go back to normal on mouse out
-	marker.addListener('mouseout', mouseOutMarker);
-	}
+        // make marker go back to normal on mouse out
+        marker.addListener("mouseout", mouseOutMarker);
+    }
 
     //fit the map to the bounds
     map.fitBounds(bounds);
 
-var result;
+    var result;
 
-// function to add content to infowindow
-function populateInfoWindow(marker, infowindow) {
-	if (infowindow.marker != marker) {
-		infowindow.marker = marker;
+    // function to add content to infowindow
+    function populateInfoWindow(marker, infowindow) {
+        if (infowindow.marker != marker) {
+            infowindow.marker = marker;
 
-        //foursquare API authentication
-        var foursquareClientId = "JR52CKCFQ4ZOI1OHAHBMW5JHWFXJFXA0CUBO0ZFTYN11YGHV";
-        var foursquareClientSecret = "NAA0XP2JH2CMHWAUUTRZWKVUEYSVKCXW2PMFCAC0L5DDXHGG";
-        var foursquareVenueId = marker.id;
+            //foursquare API authentication
+            var foursquareClientId = "JR52CKCFQ4ZOI1OHAHBMW5JHWFXJFXA0CUBO0ZFTYN11YGHV";
+            var foursquareClientSecret = "NAA0XP2JH2CMHWAUUTRZWKVUEYSVKCXW2PMFCAC0L5DDXHGG";
+            var foursquareVenueId = marker.id;
 
 
-        //foursquare venue search call
-        $.ajax({
-            url: "https://api.foursquare.com/v2/venues/"+ foursquareVenueId + '/tips?',
-            method: 'GET',
-            async: true,
-            dataType: "json",
-            data: {
-                client_id: foursquareClientId,
-                client_secret: foursquareClientSecret,
-                v: "20170801",
-                venue_id: foursquareVenueId,
-                limit: 5,
-                sort: 'popular'        
-            },
-            success: function(stuff) {
-                result = stuff.response.tips.items[0].text;
-                infowindow.setContent('<div>' + marker.title + ' | ' + marker.type + '</div><hr><div>'+result+'</div>');
+            //foursquare venue search call
+            $.ajax({
+                url: "https://api.foursquare.com/v2/venues/"+ foursquareVenueId + "/tips?",
+                method: "GET",
+                async: true,
+                dataType: "json",
+                data: {
+                    client_id: foursquareClientId,
+                    client_secret: foursquareClientSecret,
+                    v: "20170801",
+                    venue_id: foursquareVenueId,
+                    limit: 5,
+                    sort: "popular"
+                },
+                success: function(stuff) {
+                    result = stuff.response.tips.items[0].text;
+                    infowindow.setContent("<div>" + marker.title + " | " + marker.type + "</div><hr><div>"+result+"</div>");
 
-                infowindow.open(map, marker);
-                infowindow.addListener('closeclick', function(){
-                    infowindow.setMarker = null;
-                });
-            },
-            error: function(err){
-                infowindow.setContent('<div>Foursquare data is unavailable. Please try refreshing.</div>');
+                    infowindow.open(map, marker);
+                    infowindow.addListener("closeclick", function(){
+                        infowindow.setMarker = null;
+                    });
+                },
+                error: function(err){
+                    infowindow.setContent("<div>Foursquare data is unavailable. Please try refreshing.</div>");
 
-                infowindow.open(map,marker);
-            }
+                    infowindow.open(map,marker);
+                }
+            });
+
+
+
+        }
+    }
+
+
+    // function to drop a pin from heaven
+    function bouncePin(marker) {
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function(){marker.setAnimation(null); }, 750);
+        }
+    }
+
+
+    function clickMarker() {
+        populateInfoWindow(this,infoWindow);
+        bouncePin(this);
+        map.setCenter(this.getPosition());
+    }
+
+    function mouseOverMarker() {
+        this.setOpacity(1.0);
+    }
+
+    function mouseOutMarker() {
+        this.setOpacity(0.5);
+    }
+
+    function hideMarkers(list) {
+        list.forEach(function(marker) {
+            marker.setVisible(false);
         });
+    }
 
+    function showMarkers(list){
+        list.forEach(function(marker) {
+            marker.setVisible(true);
+        });
+    }
 
-
-	}
-}
-
-
-// function to drop a pin from heaven
-function bouncePin(marker) {
-	if (marker.getAnimation() !== null) {
-		marker.setAnimation(null);
-	} else {
-		marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){marker.setAnimation(null); }, 750);
-	}
-}
-
-
-function clickMarker() {
-    populateInfoWindow(this,infoWindow);
-    bouncePin(this);
-    map.setCenter(this.getPosition());
-}
-
-function mouseOverMarker() {
-    this.setOpacity(1.0);
-}
-
-function mouseOutMarker() {
-    this.setOpacity(0.5);
-}
-
-function hideMarkers(list) {
-    list.forEach(function(marker) {
-        marker.setVisible(false);
-    })
-}
-
-function showMarkers(list){
-    list.forEach(function(marker) {
-        marker.setVisible(true);
-    })
-}
-
-self.clickList = function(listName) {
-    google.maps.event.trigger(listName, 'click');
-}
+    self.clickList = function(listName) {
+        google.maps.event.trigger(listName, "click");
+    };
 
 
 };
-
