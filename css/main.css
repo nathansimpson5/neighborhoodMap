@@ -13,6 +13,10 @@ html, body {
 	z-index: 1;
 }
 
+#infoBarTitle {
+	text-align: center;
+}
+
 #map {
 	height: 100%;
 	background-color: grey;
@@ -21,10 +25,6 @@ html, body {
 #placeSearchBox {
 	width: 80%;
 	margin: 10px;
-}
-
-#placeSearchButton {
-	margin-left: 70px;
 }
 
 #error {
