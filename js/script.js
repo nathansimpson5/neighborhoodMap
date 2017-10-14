@@ -263,6 +263,9 @@ function showMarkers(list){
     })
 }
 
+self.clickList = function(listName) {
+    google.maps.event.trigger(listName, 'click');
+}
 
 
 };
