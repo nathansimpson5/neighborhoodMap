@@ -111,6 +111,7 @@ function initMap() {
 
 function mapError() {
     document.getElementById("error").innerHTML = "<h1> ERROR LOADING PAGE! do you even have internet? Check, then reload.</h1>";
+    document.getElementById("hamInfo").style.display = 'none';
 }
 
 var ViewModel = function() {
