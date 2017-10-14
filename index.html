@@ -2,16 +2,16 @@
 <html>
   <head>
   <title>Udacity Neighborhood Map</title>
-  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div id="ham">
+    <nav id="ham">
       &#9776; Menu
-    </div>
+    </nav>
 
-      <div id="hamInfo">
+      <aside id="hamInfo">
         <h2 id="hamInfoTitle">Places of interest</h2>
         <input type="text" placeholder="search for a place" id="placeSearchBox" data-bind="textInput: searchBoxInput">
         <hr>
@@ -19,10 +19,10 @@
         <ul data-bind="foreach: filteredList">
           <li data-bind="text: title, click: $parent.clickList"></li>
         </ul>
-      </div>
+      </aside>
     
 
-  	<div id="infoBar">
+  	<aside id="infoBar">
   		<h2 id="infoBarTitle">Places of interest</h2>
       <input type="text" placeholder="search for a place" id="placeSearchBox" data-bind="textInput: searchBoxInput">
       <hr>
@@ -30,10 +30,10 @@
   		<ul data-bind="foreach: filteredList">
   			<li data-bind="text: title, click: $parent.clickList"></li>
   		</ul>
-  	</div>
-    <div id="map">
-          <div id="error"></div>
-    </div>
+  	</aside>
+    <main id="map">
+          <section id="error"></section>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
