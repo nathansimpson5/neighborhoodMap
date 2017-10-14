@@ -121,12 +121,15 @@ var ViewModel = function() {
     self.filteredList = ko.computed(function() {
         var filter = self.searchBoxInput().toLowerCase();
         if (!filter){
-            return places;
+            showMarkers(markers());
+            return markers();
         } else {
             var listy = [];
-            places.forEach(function(placeItem){
-                if (placeItem.name.toLowerCase().indexOf(self.searchBoxInput()) !== -1){
+            hideMarkers(markers());
+            markers().forEach(function(placeItem){
+                if (placeItem.title.toLowerCase().indexOf(self.searchBoxInput()) !== -1){
                     listy.push(placeItem);
+                    showMarkers(listy);
                 }
             });
             return listy;
@@ -246,6 +249,18 @@ function mouseOverMarker() {
 
 function mouseOutMarker() {
     this.setOpacity(0.5);
+}
+
+function hideMarkers(list) {
+    list.forEach(function(marker) {
+        marker.setVisible(false);
+    })
+}
+
+function showMarkers(list){
+    list.forEach(function(marker) {
+        marker.setVisible(true);
+    })
 }
 
 
